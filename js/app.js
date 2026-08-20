@@ -62,6 +62,20 @@
     return r;
   }
 
+  function correctOption(q) {
+    for (var i = 0; i < q.options.length; i++) {
+      if (q.options[i].key === q.answer.key) return q.options[i];
+    }
+    return null;
+  }
+
+  function answerText(q) {
+    var o = correctOption(q);
+    if (!o) return '（正解 ' + q.answer.key + '）';
+    if (o.text) return truncate(o.text, 24);
+    return '（正解為圖片選項）';
+  }
+
   function uniq(arr) {
     var out = [], seen = {};
     for (var i = 0; i < arr.length; i++) {
@@ -272,13 +286,13 @@
       }
       var checked = chosen ? ' checked="checked"' : '';
       return '<button type="button" class="' + cls + '" data-letter="' + esc(o.key) + '"' + checked + '>' +
-        '<span class="opt-letter">(' + esc(o.key) + ')</span>' + text + '<span class="opt-imgs">' + oImgs + '</span>' +
+        text + '<span class="opt-imgs">' + oImgs + '</span>' +
         '</button>';
     }).join('');
 
     var expl = '';
     if (state.answers[q.id]) {
-      expl = '<div class="expl"><b>正解：(' + q.answer.key + ')</b>' +
+      expl = '<div class="expl"><b>正解：' + esc(answerText(q)) + '</b>' +
         (q.explanation ? '<div>' + q.explanation + '</div>' : '') + '</div>';
     }
 
@@ -351,7 +365,7 @@
       ? '<div id="wrongList"><h3>錯題清單（' + wrongQs.length + ' 題）</h3><ol>' +
         wrongQs.map(function (qb) {
           var q = qById(qb.id);
-          return '<li>『' + esc(q.level + ' 科目' + q.subject + ' 第' + q.num + '題') + '』· ' + esc(truncate(q.text, 40)) + '（正解 ' + esc(q.answer.key) + '）</li>';
+          return '<li>『' + esc(q.level + ' 科目' + q.subject + ' 第' + q.num + '題') + '』· ' + esc(truncate(q.text, 40)) + '（正解：' + esc(answerText(q)) + '）</li>';
         }).join('') + '</ol></div>'
       : '<p style="color:var(--good);font-weight:700">全部答對，太棒了！</p>';
 
