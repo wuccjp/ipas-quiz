@@ -9,6 +9,7 @@
     queue: [],
     cursor: 0,
     answers: {},
+    optOrder: {},
     rangeCache: []
   };
 
@@ -180,6 +181,16 @@
     return a;
   }
 
+  function optOrderFor(q) {
+    var order = state.optOrder[q.id];
+    if (!order) {
+      order = [];
+      for (var i = 0; i < q.options.length; i++) order.push(i);
+      state.optOrder[q.id] = shuffle(order);
+    }
+    return state.optOrder[q.id];
+  }
+
   function cmpRound(a, b) {
     return (a && a.round != null ? String(a.round) : String(a || '')) <
            (b && b.round != null ? String(b.round) : String(b || '')) ? -1 : 1;
@@ -216,6 +227,7 @@
     state.queue = qs;
     state.cursor = 0;
     state.answers = {};
+    state.optOrder = {};
     state.rangeCache = qs;
     els.setup.classList.add('hidden');
     els.result.classList.add('hidden');
@@ -245,7 +257,8 @@
       return '<img src="' + esc(src) + '" alt="題目圖" loading="lazy">';
     }).join('');
 
-    var opts = (q.options || []).map(function (o) {
+    var opts = optOrderFor(q).map(function (oi) {
+      var o = q.options[oi];
       var oImgs = (o.images || []).map(function (src) {
         return '<img src="' + esc(src) + '" alt="選項圖" loading="lazy">';
       }).join('');

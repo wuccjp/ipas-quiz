@@ -35,7 +35,17 @@ python -m http.server 8000
 
 ## 部署至 GitHub Pages（公開 repo）
 
-```bash
+### 1. 安裝並登入 GitHub CLI
+```powershell
+winget install --id GitHub.cli --accept-source-agreements --accept-package-agreements
+gh auth login        # 選 GitHub.com → HTTPS → 瀏覽器登入（或貼 Personal Access Token）
+```
+若 winget/MSI 因舊的 msiexec 卡在 1618，可改用 zip 版解壓到資料夾並加進 PATH（見下方）。PATH 更新後請開**新終端機**讓 `gh` 生效。
+
+> 免安裝 zip 版：下載 `gh_<版本>_windows_amd64.zip` 解壓到 `%LOCALAPPDATA%\Programs\GitHubCLI`，並把其中的 `bin` 資料夾加入使用者 PATH（[環境變數] 或 `[Environment]::SetEnvironmentVariable('Path', ..., 'User')`）。
+
+### 2. 建立 repo 並推送
+```powershell
 cd 考古題json
 git init
 git add -A
@@ -43,9 +53,8 @@ git commit -m "init: iPAS AI 應用規劃師考古題刷題站"
 gh repo create ipas-quiz --public --source=. --push
 ```
 
-後續於 GitHub：**Settings → Pages → Build and deployment → Source: Deploy from a branch**，Branch 選 `main`、資料夾 `/ (root)`。
-
-或直接推送後於網頁操作建立 repo 亦可，完成後網址為 `https://<你的帳號>.github.io/ipas-quiz/`。
+### 3. 啟用 GitHub Pages
+GitHub 網頁：**Settings → Pages → Build and deployment → Source: Deploy from a branch**，Branch 選 `main`、資料夾 `/ (root)`。完成後網址為 `https://<你的帳號>.github.io/ipas-quiz/`。
 
 ## 增加新梯次考古題
 
