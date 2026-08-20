@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPAS 刷題 - AI 應用規劃師考古題</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1 id="homeBtn" title="回到首頁">iPAS 刷題</h1>
+    <p class="subtitle">AI 應用規劃師考古題庫</p>
+    <button id="clearBtn" type="button">清除進度</button>
+  </header>
+
+  <main>
+    <section id="setup" class="panel">
+      <h2>設定練習範圍</h2>
+      <div class="row">
+        <label>等級
+          <select id="levelSel"></select>
+        </label>
+        <label>科目
+          <select id="subjectSel"></select>
+        </label>
+      </div>
+      <div class="row">
+        <span class="label-txt">梯次（可複選）</span>
+        <div id="roundsBox"></div>
+      </div>
+      <div class="row">
+        <label><input type="radio" name="mode" value="order" checked> 順序出題</label>
+        <label><input type="radio" name="mode" value="random"> 隨機出題</label>
+        <label><input type="radio" name="mode" value="wrong"> 只練錯題</label>
+      </div>
+      <div id="rangeInfo" class="info"></div>
+      <button id="startBtn" type="button" class="primary">開始練習</button>
+    </section>
+
+    <section id="quiz" class="panel hidden">
+      <div class="quiz-top">
+        <span id="counter"></span>
+        <span id="score"></span>
+      </div>
+      <div class="progress-bar"><div id="progressFill"></div></div>
+      <div id="cardWrap"></div>
+      <div class="quiz-nav">
+        <button id="prevBtn" type="button">上一題</button>
+        <button id="nextBtn" type="button" class="primary">下一題</button>
+        <button id="resultBtn" type="button" class="hidden">看結果</button>
+      </div>
+    </section>
+
+    <section id="result" class="panel hidden">
+      <h2>練習結果</h2>
+      <div id="resultSummary"></div>
+      <div id="wrongList"></div>
+      <div class="quiz-nav">
+        <button id="againBtn" type="button">再練一次</button>
+        <button id="wrongBtn" type="button">只練錯題</button>
+        <button id="backBtn" type="button" class="primary">回設定</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    資料來源：經濟部產業人才能力鑑定（iPAS）公告試題。<a href="https://www.ipas.org.tw/AI/ExamArchive.aspx" target="_blank" rel="noopener">官方考古題專區</a>
+  </footer>
+
+  <script src="js/bank.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
